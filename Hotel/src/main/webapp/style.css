@@ -1,0 +1,197 @@
+body {
+    font: 15px/1.5 Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #070707
+}
+
+/* TO target class, use .
+    To target id, use #
+*/
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+h2{
+     font-size: 30px
+
+}
+
+header {
+    background: #070707;
+    color: #a1f0f4;
+    padding-top: 30px;
+    min-height: 70px;
+    border-bottom: #9b02f9 10px solid;
+}
+
+header a {
+    color: #a1f0f4;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 16px;
+}
+
+header li {
+    float: left;
+    display: inline;
+    padding: 0 20px 0 20px;
+}
+
+header #branding {
+    float: left;
+}
+
+header #branding h1 {
+    margin: 0;
+}
+
+header nav {
+    float: right;
+    margin-top: 10px;
+}
+
+header .highlight, header .current a {
+    color: #a1f0f4;
+    font-weight: bold;
+}
+
+#showcase {
+    min-height: 700px;
+    background:070707
+    text-align: center;
+    color: #a1f0f4;
+    
+}
+
+#showcase h1 {
+    margin-top: 100px;
+    font-size: 55px;
+    margin-bottom: 10px;
+    text-align: center; 
+}
+.pic{
+     width: 500px; 
+     display: block;
+     margin-left: auto;
+     margin-right: auto;
+     margin-top: 100px;
+     
+
+}
+
+#showcase p {
+    font-size: 60px;
+    text-align: center
+}
+
+#quote {
+    padding: 15px;
+    color: #a1f0f4;
+    background: #070707;
+}
+
+#quote h1 {
+   text-align: center;
+}
+
+#quote form {
+    float: right;
+    margin-top: 15px;
+}
+
+#quote input[type="ID"] {
+   width: 100%;
+    padding: 12px 20px;
+    margin: 4px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+
+}
+#quote input[type="FIRSTNAME"] {
+   width: 100%;
+    padding: 12px 20px;
+    margin: 4px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+
+}
+#quote input[type="LASTNAME"] {
+   width: 100%;
+    padding: 12px 20px;
+    margin: 4px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+
+}
+#quote input[type="USERNAME"] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+#quote input[type="PASSWORD"] {
+   width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+
+#boxes {
+    margin-top: 20px;
+    color:#a1f0f4
+}
+
+#boxes .box {
+    float: left;
+    text-align: center;
+    padding: 10px;
+    width: 30%;
+    background-color:#070707
+    font-size:20px;
+
+    
+}
+
+footer {
+    padding: 20px;
+    margin-top: 20px;
+    color: #a1f0f4;
+    background-color: #070707;
+    text-align: center;
+    border-top: #9b02f9 10px solid; 
+}
+
+/* Media Queries */
+@media(max-width: 768px) {
+    header #branding, 
+    header nav,
+    header nav li,
+    #quote h1,
+    #quote form,
+    #boxes .box {
+        float: none;
+        text-align: center;
+        width:100%;
+    }
+}
