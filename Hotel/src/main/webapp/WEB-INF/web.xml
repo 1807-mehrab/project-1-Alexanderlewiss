@@ -141,6 +141,47 @@
   <url-pattern>/createT</url-pattern>
   </servlet-mapping>
   
+    <servlet>
+    <servlet-name>respondT</servlet-name>
+ <servlet-class>com.alex.hotel.RespondTicketServlet</servlet-class>
+  </servlet>
+  
+   <servlet-mapping>
+  <servlet-name>respondT</servlet-name>
+  <url-pattern>/respondT</url-pattern>
+  </servlet-mapping>
+  
+      <servlet>
+    <servlet-name>viewT</servlet-name>
+ <servlet-class>com.alex.hotel.ViewTicketServlet</servlet-class>
+  </servlet>
+  
+   <servlet-mapping>
+  <servlet-name>viewT</servlet-name>
+  <url-pattern>/viewT</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+    <servlet-name>viewP</servlet-name>
+ <servlet-class>com.alex.hotel.ViewProfileServlet</servlet-class>
+  </servlet>
+  
+   <servlet-mapping>
+  <servlet-name>viewP</servlet-name>
+  <url-pattern>/viewP</url-pattern>
+  </servlet-mapping>
+  
+    <servlet>
+    <servlet-name>viewUP</servlet-name>
+ <servlet-class>com.alex.hotel.UpdateProfileServlet</servlet-class>
+  </servlet>
+  
+   <servlet-mapping>
+  <servlet-name>viewUP</servlet-name>
+  <url-pattern>/viewUP</url-pattern>
+  </servlet-mapping>
+  
+  
   
 
 </web-app>

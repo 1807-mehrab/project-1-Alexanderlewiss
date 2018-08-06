@@ -16,6 +16,7 @@
  <h2>Fill out the form below to update your profile information!</h2>
 <div class="form" >
     <form action="updateI" method="post">
+    <input type="text" name="Update" placeholder="User to update">
         <input type="text" name="User_Name" placeholder="User Name">
         <input type="text" name="Pass" placeholder="Password">
         <input type="text" name="First_Name" placeholder="First Name">

@@ -44,6 +44,10 @@ public class Guest {
 		this.firstName = firstName; 
 		this.lastName = lastName; 
 	}
+	
+	public Guest(String uId) {
+		this.userName = uId;
+	}
 
 	@Override
 	public String toString()

@@ -28,9 +28,9 @@ public class ReservationServlet extends HttpServlet{
 		
 		   resp.setContentType("text/html"); 
 		   PrintWriter o = resp.getWriter();
-		   
+		
 		  
-		  int uID = 1;  
+		
 		   
 		   String dateI = req.getParameter("i"); 
 		   String dateO = req.getParameter("p"); 
@@ -50,9 +50,8 @@ public class ReservationServlet extends HttpServlet{
 			  
 				  
 			   
-			   if(!LoginDao.makeReservation(uID, dateIn, dateOut, gID, status, roomNum)) {
+			   if(LoginDao.makeReservation( dateIn, dateOut, gID, status, roomNum)) {
 				 
-				   
 				   status = "Booked";
 				   resp.sendRedirect("Dashboard.html"); 
 			   }
@@ -70,11 +69,6 @@ public class ReservationServlet extends HttpServlet{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-			
-		   //java.sql.Date.valueOf(dateI); 
-		   //java.sql.Date.valueOf(dateO); 
-		  
-		
 		   
 		   
 		   o.close(); 

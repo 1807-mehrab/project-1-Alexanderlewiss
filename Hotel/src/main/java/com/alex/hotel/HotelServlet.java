@@ -32,7 +32,7 @@ public class HotelServlet extends HttpServlet{
 			   String lastName = req.getParameter("l"); 
 			    
 			   
-			   if(LoginDao.createAccount(userName, passWord, firstName, lastName)) {
+			   if(!LoginDao.createAccount(userName, passWord, firstName, lastName)) {
 				   
 				   resp.sendRedirect("Login.html"); 
 			   }

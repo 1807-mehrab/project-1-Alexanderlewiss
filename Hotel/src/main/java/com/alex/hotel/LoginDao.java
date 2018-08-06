@@ -98,27 +98,34 @@ public class LoginDao {
 		}
 		return rooms; 
 	}
-	static public boolean makeReservation(int ID, java.sql.Date dateIn, java.sql.Date dateOut, String GUEST_USER_ID, String STATUS, String ROOM_NUM) {
+	static public boolean makeReservation( java.sql.Date dateIn, java.sql.Date dateOut, String GUEST_USER_ID, String STATUS, String ROOM_NUM) {
 		CallableStatement cs = null;
-		boolean created = false;
+		boolean created = true;
 		Reservation r = null;
+		PreparedStatement ps = null;
+		PreparedStatement pss = null;
 		
 		try (Connection conn = ConnectionUtil.getConnection()) {
 
-			String sql = "{CALL SP_MAKE_RESERVATION(?,?,?,?,?,?)}";
-			cs = conn.prepareCall(sql);
-			cs.setInt(1, ID);
-			cs.setDate(2, dateIn);
-			cs.setDate(3, dateOut);
-			cs.setString(4, GUEST_USER_ID);
-			cs.setString(5, STATUS);
-			cs.setString(6, ROOM_NUM);
+			//String sql = "{CALL SP_MAKE_RESERVATION(?,?,?,?,?,?)}";
+			String sql = "INSERT INTO RESERVATION (DATE_IN, DATE_OUT, GUEST_USER_ID, STATUS, ROOM_NUM) values(?,?,?,?,?)";
+			ps = conn.prepareCall(sql);
+			//cs.setInt(1, ID);
+			ps.setDate(1, dateIn);
+			ps.setDate(2, dateOut);
+			ps.setString(3, GUEST_USER_ID);
+			ps.setString(4, STATUS);
+			ps.setString(5, ROOM_NUM);
 			
-			r = new Reservation(ID, dateIn, dateOut, GUEST_USER_ID, STATUS, ROOM_NUM);
+			r = new Reservation(dateIn, dateOut, GUEST_USER_ID, STATUS, ROOM_NUM);
 
-			boolean result = cs.execute();
+			boolean result = ps.execute();
 
-			if (result) {
+			if (!result) {
+				String sqll = "UPDATE ROOM SET STATUS = 'Booked' WHERE ROOM_NUMBER = '"+ROOM_NUM +"' "  ;
+				pss = conn.prepareStatement(sqll);
+				//pss.setString(1, ROOM_NUM);
+				pss.executeUpdate(sqll);
 				created = true;
 			} else {
 				created = false;
@@ -145,13 +152,13 @@ public class LoginDao {
 			 
 			 while(rs.next())
 			 {
-				 int id = rs.getInt("ID");
+				// int id = rs.getInt("ID");
 				 Date d_In = rs.getDate("Date_IN"); 
 				 Date d_Out = rs.getDate("Date_OUT");
 				 String g_id = rs.getString("GUEST_USER_ID");
 				 String s = rs.getString("STATUS"); 
 				 String rNum = rs.getString("ROOM_NUM"); 
-				 r = new Reservation(id,d_In, d_Out,g_id, s, rNum); 
+				 r = new Reservation(d_In, d_Out,g_id, s, rNum); 
 				 res.add(r); 
 			 }
 			rs.close();
@@ -251,35 +258,173 @@ public class LoginDao {
      }
     public static boolean createTicket(int state, String uId, String t, String mes)
     {
-    	boolean created = false; 
-    	PreparedStatement ps = null; 
-    	
+    	int created = 0; 
+    	boolean c = true; 
+    	Ticket tt; 
 		try(Connection conn = ConnectionUtil.getConnection()){
-		String sql = "INSERT INTO TICKET ACTIVE="+state;
-		
-	    ps = conn.prepareStatement(sql);
-	    created = ps.execute(sql);
-	    
-	    if(created)
-		 {
-			 created = true; 
-			// tt = new Ticket(state, uId, t, mes); 
 			
-		 }
-	    
+		String sql = "INSERT INTO TICKET ( ACTIVE, USERID, MTOPIC, MESSAGE) VALUES ( ?, ?, ?,?)";
+
+		PreparedStatement ps = conn.prepareStatement(sql);
+		
+		ps.setInt(1, state);
+		ps.setString(2, uId);
+		ps.setString(3, t);
+		ps.setString(4, mes);
+		
+		tt = new Ticket(state, uId , t, mes);
+		
+		ResultSet rs; 
+	   rs =  ps.executeQuery();
+	 
+	   while(rs.next())
+	   {
+		 
+	   }
+	   
 	    ps.close();
+	    rs.close();
 	    conn.close();
 	    
 		}catch (Exception ex) {
  			ex.printStackTrace();
  		     }
 		
-			return created; 
+			return c; 
 			
     }
     
+    public static boolean respondTicket(String uId)
+    {
+    	boolean responded = true; 
+    	PreparedStatement ps = null; 
+    	try(Connection conn = ConnectionUtil.getConnection()){
+    		
+    		String sql = "UPDATE TICKET SET ACTIVE = 0 WHERE USERID = ?"; 
+
+    	
+    	    ps = conn.prepareStatement(sql);
+    	    ps.setString(1, uId);
+    	    ResultSet rs; 
+    		rs =  ps.executeQuery();
+    		
+    		ps.close();
+    	    rs.close();
+    	    conn.close();
+    	    
+    	    
+    		
+    		
+    	}catch (Exception ex) {
+    		ex.printStackTrace();
+    	}
+    	
+    	return responded;
+    	
+    }
     
+    public List<Ticket> viewMessage(String uId)
+    {
+    	PreparedStatement ps = null;
+    	Ticket t = null; 
+    	List<Ticket> tics = new ArrayList<>();
+    	try(Connection conn = ConnectionUtil.getConnection()){
+    		
+    		String sql = "SELECT * FROM TICKET WHERE USERID = ?"; 
+
+    	
+    	    ps = conn.prepareStatement(sql);
+    	    ps.setString(1, uId);
+    	    ResultSet rs; 
+    		rs =  ps.executeQuery();
+    		
+    		 while(rs.next())
+ 			 {
+ 				 int state = rs.getInt("ACTIVE"); 
+ 				 String un = rs.getString("USERID");
+ 				 String topic = rs.getString("MTOPIC"); 
+ 				 String mes = rs.getString("MESSAGE"); 
+ 				 t = new Ticket(state, un, topic, mes); 
+ 				 tics.add(t); 
+ 			 }
+    		
+    		
+    		
+    		
+    		ps.close();
+    	    rs.close();
+    	    conn.close();
+    	    
+    	    
+    		
+    		
+    	}catch (Exception ex) {
+    		ex.printStackTrace();
+    	}
+    	
+    	return tics;
+    }
     
+    public List<Guest> viewProfile(String uId)
+    {
+    	PreparedStatement ps = null;
+    	Guest g = null; 
+    	List<Guest> profile = new ArrayList<>();
+    	
+    	try (Connection conn = ConnectionUtil.getConnection()) {
+			 ps = conn.prepareStatement("SELECT * FROM GUEST WHERE USER_NAME = ?");
+
+			ps.setString(1, uId);
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next())
+			 {
+				 String un = rs.getString("USER_NAME"); 
+				 String pass = rs.getString("PASS");
+				 String fName = rs.getString("FIRST_NAME"); 
+				 String lName = rs.getString("LAST_NAME"); 
+				 g = new Guest(un, pass, fName, lName); 
+				 profile.add(g); 
+			 }
+			
+			ps.close();
+    	    rs.close();
+    	    conn.close();
+			
+			
+    	}catch (Exception ex) {
+    		ex.printStackTrace();
+    	}
+    	
+    	return profile; 
+    	
+    }
+    public static boolean updateProfile(String uId, String password, String firstName, String lastName, String userToUpdate)
+    {
+    	PreparedStatement ps = null;
+    	
+    	boolean updated = true; 
+    	try (Connection conn = ConnectionUtil.getConnection()) {
+    		
+    		String sql = "UPDATE GUEST SET USER_NAME ='"+ uId +"',PASS='" + password + "', FIRST_NAME='"+ firstName +"', LAST_NAME='"+lastName+"' WHERE USER_NAME ='"+userToUpdate +"' ";
+    		ps = conn.prepareStatement(sql);
+    		ps.execute();
+    		
+    	 
+    	
+    		ps.close();
+    	  
+    	    conn.close();
+    			
+    		
+    		
+    	}catch (Exception ex) {
+    		ex.printStackTrace();
+    	}
+    	
+    	return updated; 
+    	
+    }
     
 }
        

@@ -12,14 +12,7 @@
 <link type="text/css" rel="stylesheet" href="stylea.css">
 <title>User Profile</title>
 <h1>Welcome to your profile page!</h1>
-<script language="javascript">  
-function editUser(un){
-var z = document.form; 
-z.method="post";
-z.action='edit.jsp'; 
-z.submit(); 
-}
-</script>
+
 <nav>
 	<ul>
 		<li class="returnDash"><a href="Dashboard.html">Return to
@@ -44,7 +37,7 @@ z.submit();
 				<th>Last Name</th>
 			</tr>
 			<%
-				int count = 0;
+				
 				String id = request.getParameter("Ahs282");
 				try (Connection conn = ConnectionUtil.getConnection()) {
 					PreparedStatement ps = conn.prepareStatement("SELECT * FROM GUEST WHERE USER_NAME = ?");

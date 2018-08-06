@@ -36,8 +36,7 @@ public class CreateTicketServlet extends HttpServlet {
 		 }
 		 
 		 req.setAttribute("mes", mes);
-		// getServletContext().getRequestDispatcher("/Create.jsp").forward(
-	               // req, resp);
+		 
 		
 		
 	}

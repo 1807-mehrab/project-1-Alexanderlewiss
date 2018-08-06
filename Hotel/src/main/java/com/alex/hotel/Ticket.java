@@ -66,8 +66,17 @@ public class Ticket {
 		
 	}
 	
+	public Ticket(String uid) {
+		
+		this.uId = uid; 
+	}
 	
 	
+	@Override
+	public String toString()
+	{
+		return ""+"  Ticket state: " + state + " |  User: " + uId +" | Message topic : " + t + "| Message: " + message + "";
+	}
 	
 
 }

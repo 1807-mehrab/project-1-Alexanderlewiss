@@ -46,9 +46,9 @@ public class Reservation {
 	public void setStatus(String status) {
 		this.status = status;
 	} 
-	public Reservation(int id, Date dateI, Date dateO, String userID, String status, String roomnum) {
+	public Reservation(Date dateI, Date dateO, String userID, String status, String roomnum) {
 		super();
-		this.id = id;
+		
 		this.dateIn= dateI;
 		this.dateOut = dateO; 
 		this.userID = userID; 

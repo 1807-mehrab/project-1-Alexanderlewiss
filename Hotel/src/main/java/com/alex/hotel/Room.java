@@ -39,6 +39,8 @@ public class Room {
 		this.rStatus = rStatus; 
 	}
 	
+	
+	
 	@Override
 	public String toString()
 	{

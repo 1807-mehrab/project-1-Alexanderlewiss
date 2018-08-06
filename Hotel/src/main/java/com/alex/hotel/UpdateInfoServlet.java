@@ -23,6 +23,7 @@ public class UpdateInfoServlet extends HttpServlet{
 	 protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			                throws ServletException, IOException{
 		resp.setContentType("text/html");
+		String userToUpdate = req.getParameter("Update");
 		String userName = req.getParameter("User_Name");
 	    String password = req.getParameter("Pass");
 	    String firstName = req.getParameter("First_Name");
@@ -31,7 +32,7 @@ public class UpdateInfoServlet extends HttpServlet{
 	    PreparedStatement ps = null; 
 	    try (Connection conn = ConnectionUtil.getConnection()) {
 	    	
-	    	String sql = "UPDATE GUEST SET USER_NAME ='"+userName +"',PASS='" + password + "', FIRST_NAME='"+ firstName +"', LAST_NAME='"+lastName+"' WHERE USER_NAME ='"+u +"' ";;
+	    	String sql = "UPDATE GUEST SET USER_NAME ='"+userName +"',PASS='" + password + "', FIRST_NAME='"+ firstName +"', LAST_NAME='"+lastName+"' WHERE USER_NAME ='"+userToUpdate +"' ";
 	       ps = conn.prepareStatement(sql);
 	       ps.executeQuery();
 	    		
